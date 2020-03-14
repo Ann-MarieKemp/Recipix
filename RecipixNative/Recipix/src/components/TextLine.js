@@ -19,7 +19,9 @@ export default TextLine;
 const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1,
-    borderColor: 'black',
+    backgroundColor: '#ED6A5A',
+    color: 'white',
     borderRadius: 6,
+    padding: 4,
   },
 });

@@ -6,6 +6,7 @@ import {
   View,
   Image,
   StyleSheet,
+  FlatList,
 } from 'react-native';
 import vision, { firebase } from '@react-native-firebase/ml-vision';
 import TextLine from './TextLine';
@@ -32,16 +33,18 @@ class CamScreen extends Component {
   }
   async getTextStuff() {
     try {
-      const response = await firebase
-        .vision()
-        .cloudTextRecognizerProcessImage(this.state.photo.uri);
-      let innerText = [];
-      response.blocks.forEach(thing => {
-        thing.lines.forEach(thing2 => {
-          innerText.push(thing2.text);
+      if (!this.state.gotPhoto) {
+        const response = await firebase
+          .vision()
+          .cloudTextRecognizerProcessImage(this.state.photo.uri);
+        let innerText = [];
+        response.blocks.forEach(thing => {
+          thing.lines.forEach(thing2 => {
+            innerText.push(thing2.text);
+          });
         });
-      });
-      this.setState({ recipe: innerText, gotText: true });
+        this.setState({ recipe: innerText, gotText: true });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -63,7 +66,9 @@ class CamScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <TouchableHighlight onPress={this.getTextStuff}>
+          <TouchableHighlight
+            style={styles.touchableHighlightContainer}
+            onPress={this.getTextStuff}>
             <Image
               style={styles.image}
               source={{ uri: this.state.photo.uri }}
@@ -71,10 +76,15 @@ class CamScreen extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.rowContainer}>
-          {this.state.recipe &&
-            this.state.recipe.map((line, index) => {
-              return <TextLine key={index} line={line} />;
-            })}
+          {this.state.recipe && (
+            <FlatList
+              data={this.state.recipe}
+              keyExtractor={line => line}
+              renderItem={({ item }) => {
+                return <TextLine line={item} />;
+              }}
+            />
+          )}
         </View>
       </View>
     );
@@ -84,10 +94,8 @@ class CamScreen extends Component {
 const styles = StyleSheet.create({
   image: {
     width: 400,
-    height: 500,
+    height: 200,
     resizeMode: 'contain',
-    borderWidth: 2,
-    borderColor: 'orange',
   },
   container: {
     alignItems: 'center',
@@ -110,6 +118,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     borderWidth: 2,
     borderColor: 'black',
+  },
+  touchableHighlightContainer: {
+    width: 400,
+    height: 200,
   },
 });
 
