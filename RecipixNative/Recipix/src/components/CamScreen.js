@@ -6,10 +6,12 @@ import {
   View,
   Image,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import vision, { firebase } from '@react-native-firebase/ml-vision';
 import TextLine from './TextLine';
-
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 class CamScreen extends Component {
   constructor() {
     super();
@@ -51,11 +53,17 @@ class CamScreen extends Component {
   render() {
     if (!this.state.gotPhoto) {
       return (
-        <View style={styles.buttonContainer}>
+        <View style={styles.containerForButton}>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.textStyle}>
+              Pick a photo from your device or use the camera to take a photo of
+              a recipe to transcribe it
+            </Text>
+          </View>
           <TouchableHighlight
             style={styles.button}
             onPress={() => this.getPhotos()}>
-            <Text>Go To Camera Roll</Text>
+            <Text style={styles.textStyle}>Pick a Photo</Text>
           </TouchableHighlight>
         </View>
       );
@@ -83,33 +91,44 @@ class CamScreen extends Component {
 
 const styles = StyleSheet.create({
   image: {
-    width: 400,
-    height: 500,
+    width: width,
+    height: 200,
     resizeMode: 'contain',
-    borderWidth: 2,
-    borderColor: 'orange',
   },
   container: {
     alignItems: 'center',
   },
   button: {
     backgroundColor: '#ED6A5A',
-    height: 30,
+    height: 40,
     borderRadius: 6,
     padding: 6,
     alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 20,
   },
-  buttonContainer: {
-    justifyContent: 'center',
-  },
+
   rowContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
   imageContainer: {
     justifyContent: 'flex-start',
-    borderWidth: 2,
-    borderColor: 'black',
+  },
+  textStyle: {
+    color: 'white',
+    fontSize: 22,
+    textAlign: 'center',
+  },
+  containerForButton: {
+    width: width,
+    height: height,
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  descriptionContainer: {
+    padding: 6,
+    marginTop: 10,
   },
 });
 

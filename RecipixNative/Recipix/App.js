@@ -13,12 +13,10 @@ const navigator = createStackNavigator(
     defaultNavigationOptions: {
       title: 'Recipix',
       cardStyle: { backgroundColor: '#73BFB8' },
-      headerStyle: { backgroundColor: '#73BFB8' },
+      headerStyle: { backgroundColor: '#ED6A5A' },
       headerTintColor: 'white',
     },
   },
 );
-const App = props => {
-  return <View></View>;
-};
+
 export default createAppContainer(navigator);
