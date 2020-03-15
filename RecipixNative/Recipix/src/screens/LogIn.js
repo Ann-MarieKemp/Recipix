@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native';
 import { GOOGLE_CLIENT_ID } from '../../secrets';
 const width = Dimensions.get('window').width;
@@ -70,7 +70,7 @@ class Login extends Component {
     try {
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
-      this.setState({ user: null, loggedIn: false });
+      this.setState({ userInfo: {}, loggedIn: false });
     } catch (error) {
       console.error(error);
     }
@@ -98,9 +98,16 @@ class Login extends Component {
           <Text style={styles.textStyle}>
             Welcome {this.state.userInfo.user.name}!
           </Text>
-          <TouchableOpacity onPress={this.goToRecipes}>
+          <TouchableHighlight
+            style={styles.buttonBackground}
+            onPress={this.goToRecipes}>
             <Text style={styles.textStyle}>Go to Recipes</Text>
-          </TouchableOpacity>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.buttonBackground}
+            onPress={this.signOut}>
+            <Text style={styles.textStyle}>Logout</Text>
+          </TouchableHighlight>
         </View>
       );
     }
@@ -115,9 +122,16 @@ const styles = StyleSheet.create({
     width: width,
   },
   textStyle: {
-    fontSize: 22,
     color: 'white',
-    marginBottom: 20,
+    fontSize: 22,
+  },
+  buttonBackground: {
+    backgroundColor: '#ED6A5A',
+    borderRadius: 6,
+    height: 40,
+    justifyContent: 'center',
+    padding: 4,
+    marginTop: 8,
   },
 });
 

@@ -10,6 +10,7 @@ import {
   ScrollView,
   FlatList,
   TextInput,
+  Alert,
 } from 'react-native';
 import vision, { firebase } from '@react-native-firebase/ml-vision';
 import firestore from '@react-native-firebase/firestore';
@@ -40,20 +41,25 @@ class CamScreen extends Component {
   }
   async getTextStuff() {
     try {
-      const response = await firebase
-        .vision()
-        .cloudTextRecognizerProcessImage(this.state.photo.uri);
-      let innerText = [];
-      response.blocks.forEach(thing => {
-        thing.lines.forEach(thing2 => {
-          innerText.push(thing2.text);
+      if (this.state.gotText === false) {
+        const response = await firebase
+          .vision()
+          .cloudTextRecognizerProcessImage(this.state.photo.uri);
+        let innerText = [];
+        response.blocks.forEach(thing => {
+          thing.lines.forEach(thing2 => {
+            innerText.push(thing2.text);
+          });
         });
-      });
-      this.setState({
-        recipe: innerText,
-        gotText: true,
-        value: this.state.recipe.join(' '),
-      });
+        this.setState({
+          recipe: innerText,
+          gotText: true,
+          value: this.state.recipe.join(' '),
+        });
+        console.log('state', this.state);
+      } else {
+        console.log('hit this stop');
+      }
       const thing = await db.collection('Recipes').get();
       thing.docs.forEach(doc => {
         console.log(doc.data, 'thing');
@@ -61,7 +67,6 @@ class CamScreen extends Component {
     } catch (error) {
       console.error(error);
     }
-    //
   }
 
   render() {
