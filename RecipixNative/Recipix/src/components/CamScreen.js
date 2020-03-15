@@ -7,29 +7,42 @@ import {
   Image,
   StyleSheet,
   Dimensions,
-  ScrollView,
-  FlatList,
+  TouchableOpacity,
   TextInput,
-  Alert,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import vision, { firebase } from '@react-native-firebase/ml-vision';
-import firestore from '@react-native-firebase/firestore';
 import TextLine from './TextLine';
+import firestore from '@react-native-firebase/firestore';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const db = firebase.firestore();
+
+const DismissKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback
+    onPress={() => {
+      Keyboard.dismiss();
+    }}>
+    {children}
+  </TouchableWithoutFeedback>
+);
 class CamScreen extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       photo: '',
       recipe: [],
       gotPhoto: false,
       gotText: false,
       value: '',
+      userInfo: this.props.user,
     };
     this.getPhotos = this.getPhotos.bind(this);
     this.getTextStuff = this.getTextStuff.bind(this);
+    this.saveRecipe = this.saveRecipe.bind(this);
   }
   getPhotos() {
     ImagePicker.showImagePicker({ noData: true }, response => {
@@ -37,6 +50,13 @@ class CamScreen extends Component {
         let photoUri = { uri: response.uri };
         this.setState({ photo: photoUri, gotPhoto: true });
       }
+    });
+  }
+  async saveRecipe() {
+    const data = await db.collection('Recipes').add({
+      user: this.state.userInfo,
+      instructions: this.state.value,
+      recipePhoto: this.state.photo,
     });
   }
   async getTextStuff() {
@@ -54,16 +74,11 @@ class CamScreen extends Component {
         this.setState({
           recipe: innerText,
           gotText: true,
-          value: this.state.recipe.join(' '),
+          value: innerText.join(''),
         });
-        console.log('state', this.state);
       } else {
-        console.log('hit this stop');
+        alert(`You've already analyzed this text!`);
       }
-      const thing = await db.collection('Recipes').get();
-      thing.docs.forEach(doc => {
-        console.log(doc.data, 'thing');
-      });
     } catch (error) {
       console.error(error);
     }
@@ -88,28 +103,44 @@ class CamScreen extends Component {
       );
     }
     return (
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <TouchableHighlight onPress={this.getTextStuff}>
-            <Image
-              style={styles.image}
-              source={{ uri: this.state.photo.uri }}
-            />
-          </TouchableHighlight>
-        </View>
-        <View style={styles.rowContainer}>
-          {this.state.gotText && (
-            <View>
-              <Text style={styles.textStyle}>Edit the text below:</Text>
-              <FlatList
-                keyExtractor={item => item}
-                data={this.state.recipe}
-                renderItem={({ item }) => <TextLine line={item} />}
-              />
+      <DismissKeyboard>
+        <KeyboardAvoidingView behavior={'padding'}>
+          <View style={styles.container}>
+            <View style={styles.imageContainer}>
+              <TouchableHighlight onPress={this.getTextStuff}>
+                <Image
+                  style={styles.image}
+                  source={{ uri: this.state.photo.uri }}
+                />
+              </TouchableHighlight>
             </View>
-          )}
-        </View>
-      </View>
+            <View style={styles.rowContainer}>
+              {this.state.gotText && (
+                <View style={styles.inputContainer}>
+                  <Text style={styles.textStyle}>Edit the text below:</Text>
+                  <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
+                    <TextInput
+                      value={this.state.value}
+                      onChangeText={text => {
+                        this.setState({ value: text });
+                      }}
+                      multiline={true}
+                      style={styles.textInput}
+                    />
+                  </KeyboardAwareScrollView>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.saveRecipe();
+                    }}
+                    style={styles.button}>
+                    <Text style={styles.textStyle}>Save</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </DismissKeyboard>
     );
   }
 }
@@ -159,6 +190,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#ED6A5A',
     fontSize: 18,
     color: 'white',
+    width: width,
+    height: 300,
+    flex: 1,
+    flexWrap: 'wrap',
+  },
+  inputContainer: {
+    width: width - 8,
+    height: 375,
   },
 });
 

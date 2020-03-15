@@ -1,12 +1,5 @@
-import React, { Component } from 'react';
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Text,
-  PanResponder,
-  Animated,
-} from 'react-native';
+import React from 'react';
+import { StyleSheet, Text } from 'react-native';
 
 const TextLine = props => {
   return <Text style={styles.textInput}>{props.line}</Text>;

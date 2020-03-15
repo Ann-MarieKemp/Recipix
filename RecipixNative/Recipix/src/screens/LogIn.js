@@ -18,6 +18,7 @@ import {
 class Login extends Component {
   constructor() {
     super();
+    console.log(this.props, 'propsy');
     this.state = {
       userInfo: {},
       loggedIn: false,
@@ -33,7 +34,8 @@ class Login extends Component {
     });
     this.getCurrentUserInfo();
     if (this.state.userInfo.user) {
-      this.props.navigation.navigate('CamRoll');
+      const user = this.state.userInfo;
+      this.props.navigation.navigate('CamRoll', { user: user });
     }
   }
   async getCurrentUserInfo() {
@@ -76,7 +78,8 @@ class Login extends Component {
     }
   }
   goToRecipes() {
-    this.props.navigation.navigate('CamRoll');
+    const user = this.state.userInfo;
+    this.props.navigation.navigate('CamRoll', { user: user });
   }
   render() {
     if (!this.state.userInfo.user) {

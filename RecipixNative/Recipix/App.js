@@ -2,11 +2,13 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import CamRoll from './src/screens/CameraRoll';
 import Login from './src/screens/Login';
+import RecipeView from './src/screens/RecipeView'
 
 const navigator = createStackNavigator(
   {
     CamRoll: CamRoll,
     Login: Login,
+    AllRecipes: RecipeView
   },
   {
     initialRouteName: 'Login',
