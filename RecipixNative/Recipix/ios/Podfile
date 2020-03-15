@@ -9,6 +9,8 @@ pod 'Firebase/MLVision'
  pod 'Firebase/Firestore', '~> 6.13.0'
  pod 'Firebase/Storage'
  pod 'RNFS', :path => '../node_modules/react-native-fs'
+ pod 'GoogleSignIn', '~> 5.0.2'
+
 
   # Pods for Recipix
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
@@ -50,6 +52,8 @@ pod 'Firebase/MLVision'
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
+  pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
 
   target 'RecipixTests' do
     inherit! :search_paths

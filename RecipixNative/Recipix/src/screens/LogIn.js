@@ -1,34 +1,124 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import React, { Component } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import { GOOGLE_CLIENT_ID } from '../../secrets';
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from 'react-native-google-signin';
 
-import auth from '@react-native-firebase/auth';
-
-const Login = props => {
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
-
-  function onAuthStateChanged(User) {
-    setUser(user);
-    if (initializing) setInitializing(false);
+class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      userInfo: {},
+      loggedIn: false,
+    };
+    this.signIn = this.signIn.bind(this);
+    this.signOut = this.signOut.bind(this);
+    this.getCurrentUserInfo = this.getCurrentUserInfo.bind(this);
+    this.goToRecipes = this.goToRecipes.bind(this);
   }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber;
-  }, {});
-
-  if (initializing) return null;
-
-  if (!user) {
-    return (
-      <View>
-        <Text>Login</Text>
-      </View>
-    );
+  componentDidMount() {
+    GoogleSignin.configure({
+      webClientId: GOOGLE_CLIENT_ID,
+    });
+    this.getCurrentUserInfo();
+    if (this.state.userInfo.user) {
+      this.props.navigation.navigate('CamRoll');
+    }
   }
-  return (
-    <View>
-      <Text>Welcome {user.email}</Text>
-    </View>
-  );
-};
+  async getCurrentUserInfo() {
+    try {
+      const userInfo = await GoogleSignin.signInSilently();
+      this.setState({ userInfo });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+        this.setState({ loggedIn: false });
+      } else {
+        this.setState({ loggedIn: false });
+      }
+    }
+  }
+  async signIn() {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      this.setState({ userInfo: userInfo, loggedIn: true });
+      this.props.navigation.navigate('CamRoll');
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('sign in cancelled');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log('sign in in progress');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log('issue with play services');
+      } else {
+        console.log('there was an error');
+      }
+    }
+  }
+  async signOut() {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      this.setState({ user: null, loggedIn: false });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  goToRecipes() {
+    this.props.navigation.navigate('CamRoll');
+  }
+  render() {
+    if (!this.state.userInfo.user) {
+      return (
+        <View style={styles.loginContainer}>
+          <Text style={styles.textStyle}>Please Login</Text>
+          <GoogleSigninButton
+            style={{ width: 192, height: 48 }}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={this.signIn}
+            disabled={this.state.isSigninInProgress}
+          />
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.loginContainer}>
+          <Text style={styles.textStyle}>
+            Welcome {this.state.userInfo.user.name}!
+          </Text>
+          <TouchableOpacity onPress={this.goToRecipes}>
+            <Text style={styles.textStyle}>Go to Recipes</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  }
+}
+
+const styles = StyleSheet.create({
+  loginContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: height - 300,
+    width: width,
+  },
+  textStyle: {
+    fontSize: 22,
+    color: 'white',
+    marginBottom: 20,
+  },
+});
+
+export default Login;

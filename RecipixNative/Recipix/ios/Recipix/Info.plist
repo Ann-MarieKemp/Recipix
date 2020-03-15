@@ -20,6 +20,18 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.853957904487-sp19a2jjcie8u451gpn66rjft0j2oail</string>
+			</array>
+		</dict>
+		<dict/>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -37,8 +49,16 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Access to camera will be used for pulling data to create recipes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>I don't really need your camera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access to photos will be used for pulling data to create recipes</string>
+	<key>Privacy - Photo Library Usage Descriptionkey</key>
+	<string>Access to photos will be used for pulling data to create recipes</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -53,13 +73,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Access to photos will be used for pulling data to create recipes</string>
-	<key>Privacy - Photo Library Usage Descriptionkey</key>
-	<string>Access to photos will be used for pulling data to create recipes</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Access to camera will be used for pulling data to create recipes</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>I don't really need your camera</string>
 </dict>
 </plist>

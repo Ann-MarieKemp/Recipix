@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.rnfs.RNFSPackage;
 import com.mlkit.RNMlKitPackage;
