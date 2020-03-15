@@ -12,9 +12,11 @@ import {
   TextInput,
 } from 'react-native';
 import vision, { firebase } from '@react-native-firebase/ml-vision';
+import firestore from '@react-native-firebase/firestore';
 import TextLine from './TextLine';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+const db = firebase.firestore();
 class CamScreen extends Component {
   constructor() {
     super();
@@ -51,6 +53,10 @@ class CamScreen extends Component {
         recipe: innerText,
         gotText: true,
         value: this.state.recipe.join(' '),
+      });
+      const thing = await db.collection('Recipes').get();
+      thing.docs.forEach(doc => {
+        console.log(doc.data, 'thing');
       });
     } catch (error) {
       console.error(error);

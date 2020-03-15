@@ -174,6 +174,9 @@ PODS:
     - React-Core (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/turbomodule/core (= 0.61.5)
+  - Firebase/Auth (6.13.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 6.4.0)
   - Firebase/Core (6.13.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 6.1.6)
@@ -200,6 +203,12 @@ PODS:
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (= 0.3.9011)
+  - FirebaseAuth (6.4.2):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 6.2)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.2)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseAuthInterop (1.1.0)
   - FirebaseCore (6.4.0):
     - FirebaseCoreDiagnostics (~> 1.0)
@@ -550,6 +559,11 @@ PODS:
   - RNFBApp (6.3.4):
     - Firebase/Core (~> 6.13.0)
     - React
+  - RNFBAuth (6.3.4):
+    - Firebase/Auth (~> 6.13.0)
+    - Firebase/Core (~> 6.13.0)
+    - React
+    - RNFBApp
   - RNFBFirestore (6.3.4):
     - Firebase/Core (~> 6.13.0)
     - Firebase/Firestore (~> 6.13.0)
@@ -619,6 +633,7 @@ DEPENDENCIES:
   - RNCameraRoll (from `../node_modules/react-native-cameraroll`)
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBMLVision (from `../node_modules/@react-native-firebase/ml-vision`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
@@ -636,6 +651,7 @@ SPEC REPOS:
     - BoringSSL-GRPC
     - Firebase
     - FirebaseAnalytics
+    - FirebaseAuth
     - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -723,6 +739,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/masked-view"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
+  RNFBAuth:
+    :path: "../node_modules/@react-native-firebase/auth"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBMLVision:
@@ -751,6 +769,7 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 118d0d177724c2d67f08a59136eb29ef5943ec75
   Firebase: 458d109512200d1aca2e1b9b6cf7d68a869a4a46
   FirebaseAnalytics: 45f36d9c429fc91d206283900ab75390cd05ee8a
+  FirebaseAuth: ce45d7c5d46bed90159f3a73b6efbe8976ed3573
   FirebaseAuthInterop: a0f37ae05833af156e72028f648d313f7e7592e9
   FirebaseCore: 307ea2508df730c5865334e41965bd9ea344b0e5
   FirebaseCoreDiagnostics: e9b4cd8ba60dee0f2d13347332e4b7898cca5b61
@@ -784,9 +803,9 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
-  react-native-cameraroll: 035c425c733acd3333e6c673db5ab66a559ca2e0
-  react-native-image-picker: 668e72d0277dc8c12ae90e835507c1eddd2e4f85
-  react-native-safe-area-context: 8260e5157617df4b72865f44006797f895b2ada7
+  react-native-cameraroll: 875e31fc43d4a5d8694c85a71c53dcf42f72f608
+  react-native-image-picker: 6a850c41f57f0848d918c2a77aedd7aa272ffa30
+  react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
@@ -799,8 +818,9 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   RNCameraRoll: 1b2272a8f34abd68e19e59f2ca28651975ca11b7
-  RNCMaskedView: 90dd32f5b786bd562e876e1421ea77c700cbf71e
+  RNCMaskedView: 76c40a1d41c3e2535df09246a2b5487f04de0814
   RNFBApp: 7d4006751de8bb5cafa2e8d2e7d94ee250df81db
+  RNFBAuth: ed8b865db45f7ded9dbf535e390cba2ba672aede
   RNFBFirestore: 04c1eb90463c208ee072988d463c74bec09d08c1
   RNFBMLVision: e6175c7a93c2bd1579ccbdc4e43b60487a5cf547
   RNFBStorage: 3628afb1f3dd0b3395fc15c95967b9f080897aec
@@ -808,7 +828,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: dde546180bf24af0b5f737c8ad04b6f3fa51609a
   RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
   RNScreens: 03bf608b92ac0acf323f47d8f5b63a8f829340c8
-  RNTextDetector: 3983fcecbd4a95ea4664d3269a62c1b14c3a712b
+  RNTextDetector: bcbfed60c7d2a8f455314955a519fae6d5ab921a
   TesseractOCRiOS: 90638afbe43d082433f2e76b384c7901d23956df
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
