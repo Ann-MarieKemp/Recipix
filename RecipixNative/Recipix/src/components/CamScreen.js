@@ -7,6 +7,8 @@ import {
   Image,
   StyleSheet,
   Dimensions,
+  ScrollView,
+  FlatList,
 } from 'react-native';
 import vision, { firebase } from '@react-native-firebase/ml-vision';
 import TextLine from './TextLine';
@@ -79,10 +81,13 @@ class CamScreen extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.rowContainer}>
-          {this.state.recipe &&
-            this.state.recipe.map((line, index) => {
-              return <TextLine key={index} line={line} />;
-            })}
+          {this.state.recipe && (
+            <FlatList
+              keyExtractor={line => line.item}
+              data={this.state.recipe}
+              renderItem={({ item }) => <TextLine line={item} />}
+            />
+          )}
         </View>
       </View>
     );

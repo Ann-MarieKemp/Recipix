@@ -32,8 +32,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#ED6A5A',
     borderRadius: 8,
     color: 'white',
-    fontSize: 22,
+    fontSize: 18,
     margin: 2,
     padding: 4,
+    flexShrink: 0,
   },
 });
