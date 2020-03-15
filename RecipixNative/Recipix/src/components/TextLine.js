@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet, PanResponder } from 'react-native';
 import { useState } from 'react';
 
 const TextLine = props => {
