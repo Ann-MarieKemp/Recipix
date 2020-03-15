@@ -22,6 +22,7 @@
 		72FE79346580817158AD16E9 /* libPods-RecipixTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EAA9CA9913EAE23B8EEAEE9 /* libPods-RecipixTests.a */; };
 		7D2D9390241C5ECA0009527E /* libRNCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2D938F241C5ECA0009527E /* libRNCameraRoll.a */; };
 		7D40E331241BD43B000A792F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D40E330241BD43B000A792F /* GoogleService-Info.plist */; };
+		7DFDA511241E827200AE5584 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DFDA510241E827200AE5584 /* libRNGoogleSignin.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,13 @@
 			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
 			remoteInfo = RNCCameraRoll;
 		};
+		7DFDA51B241E860200AE5584 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7DFDA516241E860200AE5584 /* RNGoogleSignin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9FD355121D3E4A2900D06170;
+			remoteInfo = RNGoogleSignin;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +76,8 @@
 		7D2D9388241C5E3F0009527E /* RNCCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCCameraRoll.xcodeproj; path = "../node_modules/@react-native-community/cameraroll/ios/RNCCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		7D2D938F241C5ECA0009527E /* libRNCameraRoll.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNCameraRoll.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D40E330241BD43B000A792F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7DFDA510241E827200AE5584 /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DFDA516241E860200AE5584 /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/@react-native-community/google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
 		7FE109BE25DF8876350DD9AA /* Pods-RecipixTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecipixTests.debug.xcconfig"; path = "Target Support Files/Pods-RecipixTests/Pods-RecipixTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AD3690309FD86CE986AB3A8B /* libPods-Recipix-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Recipix-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADEB849395CB4FEB6527213C /* Pods-Recipix.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Recipix.release.xcconfig"; path = "Target Support Files/Pods-Recipix/Pods-Recipix.release.xcconfig"; sourceTree = "<group>"; };
@@ -94,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DFDA511241E827200AE5584 /* libRNGoogleSignin.a in Frameworks */,
 				7D2D9390241C5ECA0009527E /* libRNCameraRoll.a in Frameworks */,
 				5A3BD880E1EC9DD5C5ED63D3 /* libPods-Recipix.a in Frameworks */,
 			);
@@ -153,6 +164,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DFDA510241E827200AE5584 /* libRNGoogleSignin.a */,
 				7D2D938F241C5ECA0009527E /* libRNCameraRoll.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
@@ -168,6 +180,14 @@
 			isa = PBXGroup;
 			children = (
 				7D2D938D241C5E3F0009527E /* libRNCCameraRoll.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7DFDA517241E860200AE5584 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7DFDA51C241E860200AE5584 /* libRNGoogleSignin.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -190,6 +210,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				7DFDA516241E860200AE5584 /* RNGoogleSignin.xcodeproj */,
 				7D2D9388241C5E3F0009527E /* RNCCameraRoll.xcodeproj */,
 			);
 			name = Libraries;
@@ -349,6 +370,10 @@
 					ProductGroup = 7D2D9389241C5E3F0009527E /* Products */;
 					ProjectRef = 7D2D9388241C5E3F0009527E /* RNCCameraRoll.xcodeproj */;
 				},
+				{
+					ProductGroup = 7DFDA517241E860200AE5584 /* Products */;
+					ProjectRef = 7DFDA516241E860200AE5584 /* RNGoogleSignin.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -366,6 +391,13 @@
 			fileType = archive.ar;
 			path = libRNCCameraRoll.a;
 			remoteRef = 7D2D938C241C5E3F0009527E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7DFDA51C241E860200AE5584 /* libRNGoogleSignin.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGoogleSignin.a;
+			remoteRef = 7DFDA51B241E860200AE5584 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -496,11 +528,13 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Recipix/Pods-Recipix-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMLVisionTextModel/GoogleMVTextDetectorResources.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates-Cpp.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMVTextDetectorResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates-Cpp.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

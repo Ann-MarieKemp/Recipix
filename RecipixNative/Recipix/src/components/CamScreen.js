@@ -6,10 +6,18 @@ import {
   View,
   Image,
   StyleSheet,
+  Dimensions,
+  ScrollView,
+  FlatList,
+  TextInput,
+  Alert,
 } from 'react-native';
 import vision, { firebase } from '@react-native-firebase/ml-vision';
+import firestore from '@react-native-firebase/firestore';
 import TextLine from './TextLine';
-
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+const db = firebase.firestore();
 class CamScreen extends Component {
   constructor() {
     super();
@@ -18,6 +26,7 @@ class CamScreen extends Component {
       recipe: [],
       gotPhoto: false,
       gotText: false,
+      value: '',
     };
     this.getPhotos = this.getPhotos.bind(this);
     this.getTextStuff = this.getTextStuff.bind(this);
@@ -32,30 +41,48 @@ class CamScreen extends Component {
   }
   async getTextStuff() {
     try {
-      const response = await firebase
-        .vision()
-        .cloudTextRecognizerProcessImage(this.state.photo.uri);
-      let innerText = [];
-      response.blocks.forEach(thing => {
-        thing.lines.forEach(thing2 => {
-          innerText.push(thing2.text);
+      if (this.state.gotText === false) {
+        const response = await firebase
+          .vision()
+          .cloudTextRecognizerProcessImage(this.state.photo.uri);
+        let innerText = [];
+        response.blocks.forEach(thing => {
+          thing.lines.forEach(thing2 => {
+            innerText.push(thing2.text);
+          });
         });
+        this.setState({
+          recipe: innerText,
+          gotText: true,
+          value: this.state.recipe.join(' '),
+        });
+        console.log('state', this.state);
+      } else {
+        console.log('hit this stop');
+      }
+      const thing = await db.collection('Recipes').get();
+      thing.docs.forEach(doc => {
+        console.log(doc.data, 'thing');
       });
-      this.setState({ recipe: innerText, gotText: true });
     } catch (error) {
       console.error(error);
     }
-    //
   }
 
   render() {
     if (!this.state.gotPhoto) {
       return (
-        <View style={styles.buttonContainer}>
+        <View style={styles.containerForButton}>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.textStyle}>
+              Pick a photo from your device or use the camera to take a photo of
+              a recipe to transcribe it
+            </Text>
+          </View>
           <TouchableHighlight
             style={styles.button}
             onPress={() => this.getPhotos()}>
-            <Text>Go To Camera Roll</Text>
+            <Text style={styles.textStyle}>Pick a Photo</Text>
           </TouchableHighlight>
         </View>
       );
@@ -71,10 +98,16 @@ class CamScreen extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.rowContainer}>
-          {this.state.recipe &&
-            this.state.recipe.map((line, index) => {
-              return <TextLine key={index} line={line} />;
-            })}
+          {this.state.gotText && (
+            <View>
+              <Text style={styles.textStyle}>Edit the text below:</Text>
+              <FlatList
+                keyExtractor={item => item}
+                data={this.state.recipe}
+                renderItem={({ item }) => <TextLine line={item} />}
+              />
+            </View>
+          )}
         </View>
       </View>
     );
@@ -83,33 +116,49 @@ class CamScreen extends Component {
 
 const styles = StyleSheet.create({
   image: {
-    width: 400,
-    height: 500,
+    width: width,
+    height: 200,
     resizeMode: 'contain',
-    borderWidth: 2,
-    borderColor: 'orange',
   },
   container: {
     alignItems: 'center',
   },
   button: {
     backgroundColor: '#ED6A5A',
-    height: 30,
+    height: 40,
     borderRadius: 6,
     padding: 6,
     alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 20,
   },
-  buttonContainer: {
-    justifyContent: 'center',
-  },
+
   rowContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
   imageContainer: {
     justifyContent: 'flex-start',
-    borderWidth: 2,
-    borderColor: 'black',
+  },
+  textStyle: {
+    color: 'white',
+    fontSize: 22,
+    textAlign: 'center',
+  },
+  containerForButton: {
+    width: width,
+    height: height,
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  descriptionContainer: {
+    padding: 6,
+    marginTop: 10,
+  },
+  textInput: {
+    backgroundColor: '#ED6A5A',
+    fontSize: 18,
+    color: 'white',
   },
 });
 

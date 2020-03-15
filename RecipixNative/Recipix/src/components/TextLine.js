@@ -1,25 +1,26 @@
-import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
-import { useState } from 'react';
+import React, { Component } from 'react';
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Text,
+  PanResponder,
+  Animated,
+} from 'react-native';
 
 const TextLine = props => {
-  const [value, onChangeText] = useState(props.line);
-  return (
-    <TextInput
-      style={styles.textInput}
-      value={value}
-      onChangeText={text => {
-        onChangeText(text);
-      }}
-    />
-  );
+  return <Text style={styles.textInput}>{props.line}</Text>;
 };
 export default TextLine;
 
 const styles = StyleSheet.create({
   textInput: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 6,
+    backgroundColor: '#ED6A5A',
+    borderRadius: 8,
+    color: 'white',
+    fontSize: 18,
+    margin: 2,
+    padding: 4,
+    flexShrink: 0,
   },
 });
