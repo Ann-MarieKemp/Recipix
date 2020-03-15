@@ -9,6 +9,7 @@ import {
   Dimensions,
   ScrollView,
   FlatList,
+  TextInput,
 } from 'react-native';
 import vision, { firebase } from '@react-native-firebase/ml-vision';
 import TextLine from './TextLine';
@@ -22,6 +23,7 @@ class CamScreen extends Component {
       recipe: [],
       gotPhoto: false,
       gotText: false,
+      value: '',
     };
     this.getPhotos = this.getPhotos.bind(this);
     this.getTextStuff = this.getTextStuff.bind(this);
@@ -45,7 +47,11 @@ class CamScreen extends Component {
           innerText.push(thing2.text);
         });
       });
-      this.setState({ recipe: innerText, gotText: true });
+      this.setState({
+        recipe: innerText,
+        gotText: true,
+        value: this.state.recipe.join(' '),
+      });
     } catch (error) {
       console.error(error);
     }
@@ -81,12 +87,15 @@ class CamScreen extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.rowContainer}>
-          {this.state.recipe && (
-            <FlatList
-              keyExtractor={line => line.item}
-              data={this.state.recipe}
-              renderItem={({ item }) => <TextLine line={item} />}
-            />
+          {this.state.gotText && (
+            <View>
+              <Text style={styles.textStyle}>Edit the text below:</Text>
+              <FlatList
+                keyExtractor={item => item}
+                data={this.state.recipe}
+                renderItem={({ item }) => <TextLine line={item} />}
+              />
+            </View>
           )}
         </View>
       </View>
@@ -134,6 +143,11 @@ const styles = StyleSheet.create({
   descriptionContainer: {
     padding: 6,
     marginTop: 10,
+  },
+  textInput: {
+    backgroundColor: '#ED6A5A',
+    fontSize: 18,
+    color: 'white',
   },
 });
 

@@ -1,4 +1,3 @@
-import vision, { firebase } from '@react-native-firebase/ml-vision';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { AppRegistry, View } from 'react-native';
