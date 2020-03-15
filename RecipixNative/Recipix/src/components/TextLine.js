@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
-import { View, TextInput, StyleSheet, PanResponder } from 'react-native';
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Text,
+  PanResponder,
+  Animated,
+} from 'react-native';
 
 class TextLine extends Component {
   constructor(props) {
     super(props);
+    const panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (event, gesture) => {
+        position.setValue({ x: gesture.dx, y: gesture.dy });
+      },
+      onPanResponderRelease: () => {},
+    });
+    const position = new Animated.ValueXY();
     this.state = {
       value: this.props.line,
+      panResponder,
+      position,
     };
     this.onChangeText = this.onChangeText.bind(this);
   }
@@ -15,13 +32,11 @@ class TextLine extends Component {
 
   render() {
     return (
-      <TextInput
-        style={styles.textInput}
-        value={this.state.value}
-        onChangeText={text => {
-          this.onChangeText(text);
-        }}
-      />
+      <Animated.View
+        {...this.state.panResponder.panHandlers}
+        style={this.state.position.getLayout()}>
+        <Text style={styles.textInput}>{this.state.value}</Text>
+      </Animated.View>
     );
   }
 }
