@@ -104,7 +104,7 @@ class Login extends Component {
           <TouchableHighlight
             style={styles.buttonBackground}
             onPress={this.goToRecipes}>
-            <Text style={styles.textStyle}>Go to Recipes</Text>
+            <Text style={styles.textStyle}>Go to Menu</Text>
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.buttonBackground}

@@ -40,6 +40,8 @@ class CamScreen extends Component {
       value: '',
       userInfo: this.props.user,
       recipeId: '',
+      Loading: false,
+      nameValue: '',
     };
     this.getPhotos = this.getPhotos.bind(this);
     this.getTextStuff = this.getTextStuff.bind(this);
@@ -66,6 +68,7 @@ class CamScreen extends Component {
   }
   async getTextStuff() {
     try {
+      this.setState({ Loading: true });
       if (this.state.gotText === false) {
         const response = await firebase
           .vision()
@@ -79,6 +82,7 @@ class CamScreen extends Component {
         this.setState({
           recipe: innerText,
           gotText: true,
+          Loading: false,
           value: innerText.join(''),
         });
       } else {
@@ -104,6 +108,12 @@ class CamScreen extends Component {
             onPress={() => this.getPhotos()}>
             <Text style={styles.textStyle}>Pick a Photo</Text>
           </TouchableHighlight>
+          <Text style={styles.textStyle}>View All Recipes</Text>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={() => this.props.navigation.navigate('AllRecipes')}>
+            <Text style={styles.textStyle}>Go To All Recipes</Text>
+          </TouchableHighlight>
         </View>
       );
     }
@@ -112,6 +122,10 @@ class CamScreen extends Component {
         <KeyboardAvoidingView behavior={'padding'}>
           <View style={styles.container}>
             <View style={styles.imageContainer}>
+              <Text style={styles.textStyle}>Tap photo to transcribe</Text>
+              {this.state.Loading && (
+                <Text style={styles.textStyle}>Loading</Text>
+              )}
               <TouchableHighlight onPress={this.getTextStuff}>
                 <Image
                   style={styles.image}
@@ -123,6 +137,14 @@ class CamScreen extends Component {
               {this.state.gotText && (
                 <View style={styles.inputContainer}>
                   <Text style={styles.textStyle}>Edit the text below:</Text>
+                  <View style={styles.nameBox}>
+                    <Text style={styles.textStyle}>Recipe Name:</Text>
+                    <TextInput
+                      value={this.state.nameValue}
+                      onChangeText={text => this.setState({ nameValue: text })}
+                      style={styles.nameInput}
+                    />
+                  </View>
                   <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
                     <TextInput
                       value={this.state.value}
@@ -166,7 +188,8 @@ const styles = StyleSheet.create({
     padding: 6,
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: 20,
+    marginTop: 2,
+    marginBottom: 20,
   },
 
   rowContainer: {
@@ -199,10 +222,23 @@ const styles = StyleSheet.create({
     height: 300,
     flex: 1,
     flexWrap: 'wrap',
+    borderRadius: 6,
   },
   inputContainer: {
     width: width - 8,
     height: 375,
+  },
+  nameInput: {
+    backgroundColor: '#ED6A5A',
+    width: 300,
+    height: 30,
+    color: 'white',
+    fontSize: 18,
+    borderRadius: 6,
+  },
+  nameBox: {
+    flexDirection: 'row',
+    marginBottom: 5,
   },
 });
 

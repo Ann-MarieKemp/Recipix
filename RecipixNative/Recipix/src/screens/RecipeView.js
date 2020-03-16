@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View, Text, StyleSheet } from 'react-native';
 import RecipeCard from '../components/RecipeCard';
-import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
-const db = firebase.firestore();
+import vision, { firebase } from '@react-native-firebase/ml-vision';
 
 class RecipeView extends Component {
   constructor(props) {
@@ -14,31 +13,44 @@ class RecipeView extends Component {
     };
   }
   async componentDidMount() {
-    const recipeResults = await db
+    const snapshot = await firebase
+      .firestore()
       .collection('Recipes')
-      .where('user', '==', this.state.user)
       .get();
-    this.setState({ recipes: recipeResults });
+    const info = snapshot.docs.map(doc => {
+      return doc.data();
+    });
+    this.setState({ recipes: info });
   }
+
   render() {
     if (!this.state.recipes.length) {
       return (
         <View>
-          <Text>You have no saved Recipes</Text>
+          <Text style={styles.textStyle}>You have no saved Recipes</Text>
         </View>
       );
     }
     return (
       <View>
+        <Text style={styles.textStyle}>All Recipes</Text>
         <FlatList
           data={this.state.recipes}
           keyExtractor={item => item.name}
           renderItem={({ item }) => {
-            <RecipeCard item={item} />;
+            <RecipeCard recipe={item} />;
           }}
         />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  textStyle: {
+    color: 'white',
+    fontSize: 22,
+    textAlign: 'center',
+  },
+});
 export default RecipeView;
