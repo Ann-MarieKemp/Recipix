@@ -9,10 +9,11 @@ class RecipeView extends Component {
     super(props);
     this.state = {
       recipes: [],
-      user: {},
+      user: this.props.navigation.getParam('user', {}),
     };
   }
   async componentDidMount() {
+    const userInfo = this.state.user;
     const snapshot = await firebase
       .firestore()
       .collection('Recipes')
@@ -37,13 +38,10 @@ class RecipeView extends Component {
         {console.log(this.state.recipes, 'beforeflat')}
         <FlatList
           data={this.state.recipes}
-          keyExtractor={item => item.recipe.recipeName}
+          keyExtractor={item => item.recipeName}
           renderItem={({ item }) => {
             return (
-              <RecipeCard
-                recipe={item.recipe}
-                navigation={this.props.navigation}
-              />
+              <RecipeCard recipe={item} navigation={this.props.navigation} />
             );
           }}
         />

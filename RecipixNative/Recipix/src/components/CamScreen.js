@@ -63,7 +63,10 @@ class CamScreen extends Component {
       recipeName: this.state.nameValue,
     };
     await db.collection('Recipes').add({
-      recipe,
+      user: this.state.userInfo,
+      instructions: this.state.value,
+      recipePhoto: this.state.photo,
+      recipeName: this.state.nameValue,
     });
     console.log('inrecipe', recipe);
     this.props.navigation.navigate('SingleRecipe', { recipe: recipe });
@@ -113,7 +116,11 @@ class CamScreen extends Component {
           <Text style={styles.textStyle}>View All Recipes</Text>
           <TouchableHighlight
             style={styles.button}
-            onPress={() => this.props.navigation.navigate('AllRecipes')}>
+            onPress={() =>
+              this.props.navigation.navigate('AllRecipes', {
+                user: this.state.userInfo,
+              })
+            }>
             <Text style={styles.textStyle}>Go To All Recipes</Text>
           </TouchableHighlight>
         </View>

@@ -20,10 +20,7 @@ const RecipeCard = props => {
       }}>
       <View style={styles.recipeCard}>
         <View style={styles.header}>
-          <Image
-            style={styles.image}
-            source={{ uri: recipe.recipePhoto.uri }}
-          />
+          <Image style={styles.image} source={recipe.recipePhoto} />
           <View style={styles.nameBox}>
             <Text style={styles.textHeading}>{recipe.recipeName}</Text>
           </View>
@@ -45,10 +42,10 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 100,
-    height: 100,
+    height: 75,
     resizeMode: 'stretch',
     marginTop: 10,
-    marginLeft: 5,
+    marginLeft: 9,
   },
   header: {
     flexDirection: 'row',
