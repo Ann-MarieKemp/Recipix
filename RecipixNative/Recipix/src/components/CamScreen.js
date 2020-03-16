@@ -39,6 +39,7 @@ class CamScreen extends Component {
       gotText: false,
       value: '',
       userInfo: this.props.user,
+      recipeId: '',
     };
     this.getPhotos = this.getPhotos.bind(this);
     this.getTextStuff = this.getTextStuff.bind(this);
@@ -53,11 +54,15 @@ class CamScreen extends Component {
     });
   }
   async saveRecipe() {
-    const data = await db.collection('Recipes').add({
+    const recipe = {
       user: this.state.userInfo,
       instructions: this.state.value,
       recipePhoto: this.state.photo,
+    };
+    await db.collection('Recipes').add({
+      recipe,
     });
+    this.props.navigation.navigate('SingleRecipe', { recipe: recipe });
   }
   async getTextStuff() {
     try {

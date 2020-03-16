@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import CamScreen from '../components/CamScreen';
-import { useNavigation } from 'react';
 
 class CamRoll extends Component {
   constructor(props) {
@@ -11,7 +10,9 @@ class CamRoll extends Component {
     };
   }
   render() {
-    return <CamScreen user={this.state.user} />;
+    return (
+      <CamScreen navigation={this.props.navigation} user={this.state.user} />
+    );
   }
 }
 export default CamRoll;

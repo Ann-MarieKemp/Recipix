@@ -18,7 +18,6 @@ class RecipeView extends Component {
       .collection('Recipes')
       .where('user', '==', this.state.user)
       .get();
-    console.log(recipeResults, 'results');
     this.setState({ recipes: recipeResults });
   }
   render() {
