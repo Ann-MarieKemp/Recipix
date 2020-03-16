@@ -19,7 +19,6 @@ class SingleRecipe extends Component {
     this.state = {
       recipe: this.props.navigation.getParam('recipe', {}),
     };
-    console.log('in singleview', this.state.recipe);
   }
   async componentDidMount() {}
   render() {
@@ -27,7 +26,11 @@ class SingleRecipe extends Component {
       <View style={styles.singleContainer}>
         <View style={styles.header}>
           <Image style={styles.image} source={this.state.recipe.recipePhoto} />
-          <Text style={styles.textStyle}>{this.state.recipe.recipeName}</Text>
+          <View style={styles.nameBox}>
+            <Text style={styles.textHeading}>
+              {this.state.recipe.recipeName}
+            </Text>
+          </View>
         </View>
         <ScrollView style={styles.recipeCard}>
           <Text style={styles.textStyle}>{this.state.recipe.instructions}</Text>
@@ -36,12 +39,18 @@ class SingleRecipe extends Component {
     );
   }
 }
+
 export default SingleRecipe;
 
 const styles = StyleSheet.create({
   textStyle: {
     color: 'white',
     fontSize: 16,
+    textAlign: 'center',
+  },
+  textHeading: {
+    color: 'white',
+    fontSize: 26,
     textAlign: 'center',
   },
   image: {
@@ -67,5 +76,13 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
+  },
+  nameBox: {
+    height: 40,
+    borderRadius: 6,
+    padding: 6,
+    marginLeft: 34,
+    alignItems: 'center',
+    alignSelf: 'center',
   },
 });

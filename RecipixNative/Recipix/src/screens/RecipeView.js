@@ -34,11 +34,17 @@ class RecipeView extends Component {
     return (
       <View>
         <Text style={styles.textStyle}>All Recipes</Text>
+        {console.log(this.state.recipes, 'beforeflat')}
         <FlatList
           data={this.state.recipes}
-          keyExtractor={item => item.name}
+          keyExtractor={item => item.recipe.recipeName}
           renderItem={({ item }) => {
-            <RecipeCard recipe={item} />;
+            return (
+              <RecipeCard
+                recipe={item.recipe}
+                navigation={this.props.navigation}
+              />
+            );
           }}
         />
       </View>
