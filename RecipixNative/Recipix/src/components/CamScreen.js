@@ -60,10 +60,12 @@ class CamScreen extends Component {
       user: this.state.userInfo,
       instructions: this.state.value,
       recipePhoto: this.state.photo,
+      recipeName: this.state.nameValue,
     };
     await db.collection('Recipes').add({
       recipe,
     });
+    console.log('inrecipe', recipe);
     this.props.navigation.navigate('SingleRecipe', { recipe: recipe });
   }
   async getTextStuff() {
@@ -230,7 +232,7 @@ const styles = StyleSheet.create({
   },
   nameInput: {
     backgroundColor: '#ED6A5A',
-    width: 300,
+    width: 200,
     height: 30,
     color: 'white',
     fontSize: 18,
