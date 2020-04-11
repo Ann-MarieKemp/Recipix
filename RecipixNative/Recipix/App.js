@@ -1,7 +1,7 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import CamRoll from './src/screens/CameraRoll';
-import Login from './src/screens/Login';
+import Login from './src/screens/LogIn';
 import RecipeView from './src/screens/RecipeView';
 import SingleRecipe from './src/screens/SingleRecipe';
 import CamScreen from './src/components/CamScreen';

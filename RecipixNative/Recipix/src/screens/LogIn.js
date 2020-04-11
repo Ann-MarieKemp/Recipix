@@ -18,7 +18,7 @@ import {
 class Login extends Component {
   constructor() {
     super();
-    console.log(this.props, 'propsy');
+
     this.state = {
       userInfo: {},
       loggedIn: false,

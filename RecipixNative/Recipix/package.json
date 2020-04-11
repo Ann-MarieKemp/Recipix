@@ -10,7 +10,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/cameraroll": "^1.4.1",
     "@react-native-community/google-signin": "^4.0.0",
     "@react-native-community/masked-view": "^0.1.7",
     "@react-native-firebase/app": "^6.3.4",
@@ -22,10 +21,8 @@
     "@react-navigation/stack": "^5.1.1",
     "axios": "^0.19.2",
     "react": "16.9.0",
-    "react-native": "0.61.5",
-    "react-native-cameraroll": "^1.0.0-alpha2",
+    "react-native": "^0.62.2",
     "react-native-fs": "^2.16.6",
-    "react-native-gallery-manager": "^1.0.9",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-google-signin": "^2.1.1",
     "react-native-image-picker": "^2.3.1",

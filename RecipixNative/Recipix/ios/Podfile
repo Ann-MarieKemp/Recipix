@@ -45,7 +45,7 @@ pod 'Firebase/MLVision'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
-  pod 'react-native-cameraroll', :path => '../node_modules/@react-native-community/cameraroll'
+
 
 
 
