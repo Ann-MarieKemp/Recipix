@@ -12,6 +12,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
+  ScrollView,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import vision, { firebase } from '@react-native-firebase/ml-vision';
@@ -136,10 +137,12 @@ class CamScreen extends Component {
                 <Text style={styles.textStyle}>Loading</Text>
               )}
               <TouchableHighlight onPress={this.getTextStuff}>
-                <Image
-                  style={styles.image}
-                  source={{ uri: this.state.photo.uri }}
-                />
+                <ScrollView minimumZoomScale={1} maximumZoomScale={5}>
+                  <Image
+                    style={styles.image}
+                    source={{ uri: this.state.photo.uri }}
+                  />
+                </ScrollView>
               </TouchableHighlight>
             </View>
             <View style={styles.rowContainer}>
