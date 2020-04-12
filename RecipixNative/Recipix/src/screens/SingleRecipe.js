@@ -25,7 +25,12 @@ class SingleRecipe extends Component {
     return (
       <View style={styles.singleContainer}>
         <View style={styles.header}>
-          <Image style={styles.image} source={this.state.recipe.recipePhoto} />
+          <ScrollView maximumZoomScale={5} minimumZoomScale={1}>
+            <Image
+              style={styles.image}
+              source={this.state.recipe.recipePhoto}
+            />
+          </ScrollView>
           <View style={styles.nameBox}>
             <Text style={styles.textHeading}>
               {this.state.recipe.recipeName}

@@ -12,6 +12,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
+  ScrollView,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import vision, { firebase } from '@react-native-firebase/ml-vision';
@@ -131,16 +132,24 @@ class CamScreen extends Component {
         <KeyboardAvoidingView behavior={'padding'}>
           <View style={styles.container}>
             <View style={styles.imageContainer}>
-              <Text style={styles.textStyle}>Tap photo to transcribe</Text>
+              {!this.recipe && (
+                <TouchableHighlight onPress={this.getTextStuff}>
+                  <Text style={styles.textStyle}>
+                    Tap here to transcribe photo
+                  </Text>
+                </TouchableHighlight>
+              )}
               {this.state.Loading && (
                 <Text style={styles.textStyle}>Loading</Text>
               )}
-              <TouchableHighlight onPress={this.getTextStuff}>
-                <Image
-                  style={styles.image}
-                  source={{ uri: this.state.photo.uri }}
-                />
-              </TouchableHighlight>
+              <View style={styles.scrollview}>
+                <ScrollView maximumZoomScale={5} minimumZoomScale={1}>
+                  <Image
+                    style={styles.image}
+                    source={{ uri: this.state.photo.uri }}
+                  />
+                </ScrollView>
+              </View>
             </View>
             <View style={styles.rowContainer}>
               {this.state.gotText && (
@@ -186,6 +195,11 @@ const styles = StyleSheet.create({
     width: width,
     height: 200,
     resizeMode: 'contain',
+  },
+  scrollview: {
+    height: 200,
+    borderWidth: 2,
+    borderStyle: 'solid',
   },
   container: {
     alignItems: 'center',
