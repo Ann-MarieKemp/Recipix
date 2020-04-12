@@ -198,8 +198,6 @@ const styles = StyleSheet.create({
   },
   scrollview: {
     height: 200,
-    borderWidth: 2,
-    borderStyle: 'solid',
   },
   container: {
     alignItems: 'center',
