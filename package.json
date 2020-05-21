@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "preinstall": "npx npm-force-resolutions",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -45,13 +44,10 @@
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.0",
     "react-test-renderer": "16.9.0"
   },
   "jest": {
     "preset": "react-native"
-  },
-  "resolutions": {
-    "minimist": "^1.2.5"
   }
 }
