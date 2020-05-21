@@ -1,8 +1,9 @@
 {
-  "name": "Recipix",
+  "name": "recipix",
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -49,5 +50,8 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "resolutions": {
+    "minimist": "^1.2.5"
   }
 }
