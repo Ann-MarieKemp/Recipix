@@ -1,4 +1,4 @@
-###Recipix
+### Recipix
 
 Recipix is a mobile application that allows users to take a photo of a handwritten recipe and have that recipe's text detected into a digital save-able format.
 
