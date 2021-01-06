@@ -19,7 +19,7 @@
     "@react-native-firebase/storage": "^6.7.1",
     "@react-navigation/native": "^5.4.2",
     "@react-navigation/stack": "^5.3.9",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "react": "16.9.0",
     "react-native": "^0.62.2",
     "react-native-fs": "^2.16.6",
